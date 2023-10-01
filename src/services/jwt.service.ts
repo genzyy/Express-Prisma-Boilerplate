@@ -28,6 +28,17 @@ const verifyToken = (token: string): number => {
   return userId;
 };
 
+const checkIfTokenIsOld = (token: string, signedOut: Date): boolean => {
+  const unixTimestamp = Math.floor(signedOut.getTime() / 1000);
+  const { iat, exp } = jwt.decode(token) as {
+    iat: number;
+    exp: number;
+  };
+
+  if (iat < unixTimestamp && exp > unixTimestamp) return true;
+  return false;
+};
+
 const generateAuthTokenForUser = (userId: number) => {
   const accessToken = generateToken(userId);
   const refreshToken = generateToken(userId, moment().add(5, 'days').unix());
@@ -44,4 +55,4 @@ const generateAuthTokenForUser = (userId: number) => {
   };
 };
 
-export default { generateToken, verifyToken, generateAuthTokenForUser };
+export default { generateToken, verifyToken, generateAuthTokenForUser, checkIfTokenIsOld };
