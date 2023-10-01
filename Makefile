@@ -41,8 +41,12 @@ infra-down:
 run:
 	yarn dev
 
-.PHONY: check-lint
-check-lint:
+.PHONY: build
+build:
+	yarn build
+
+.PHONY: check-format
+check-format:
 	yarn run lint && yarn run prettier
 
 .PHONY: format
