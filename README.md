@@ -7,10 +7,10 @@ Highly inspired by existing templates, but with significant changes to directory
 
 ## Table of Contents
 
-- Overview
-- Stack
-- Features
-- Guide
+- [Overview](#overview)
+- [Stack](#stack)
+- [Features](#features)
+- [Guide](#guide)
 - Usage
 - Acknowledgement
 

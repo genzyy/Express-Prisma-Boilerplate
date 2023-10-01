@@ -1,22 +1,14 @@
 import prisma from '../core/prisma/client';
 import { User, UserBasicReturn } from '../types/user';
 
-const createUser = async (
-  username: string,
-  email: string,
-  password: string,
-  returnKeys: object = UserBasicReturn,
-  name?: string,
-): Promise<User> => {
+const createUser = async (username: string, email: string, password: string): Promise<User> => {
   return (await prisma.user.create({
-    select: returnKeys,
     data: {
       username,
       email,
       password,
-      name,
     },
-  })) as Promise<User>;
+  })) as unknown as Promise<User>;
 };
 
 const getUser = async (id: number, returnKeys: object = UserBasicReturn): Promise<User | null> => {
@@ -40,6 +32,20 @@ const getUserByEmail = async (
   })) as Promise<User | null>;
 };
 
+const getUserByEmailAndId = async (
+  email: string,
+  userId: number,
+  returnKeys: object = UserBasicReturn,
+): Promise<User | null> => {
+  return (await prisma.user.findUnique({
+    select: returnKeys,
+    where: {
+      email,
+      id: userId,
+    },
+  })) as Promise<User | null>;
+};
+
 const getUserByUsername = async (
   username: string,
   returnKeys: object = UserBasicReturn,
@@ -52,4 +58,4 @@ const getUserByUsername = async (
   })) as Promise<User | null>;
 };
 
-export default { createUser, getUser, getUserByEmail, getUserByUsername };
+export default { createUser, getUser, getUserByEmail, getUserByEmailAndId, getUserByUsername };

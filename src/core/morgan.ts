@@ -6,12 +6,11 @@ import logger from './logger';
 
 morgan.token('message', (req, res: Response) => res.locals.errorMessage || '');
 
-const getIPAddressFormat = () =>
-  config.environment === 'production' ? 'remote-ip-address - ' : '';
+const getIPAddressFormat = () => (config.environment === 'production' ? ':remote-addr - ' : '');
 
-const successResFormat = `${getIPAddressFormat()}\n:method\n:url\n:status -\n:response-time ms\n`;
+const successResFormat = `${getIPAddressFormat()}:status :method :url  (:res[content-length]) - :response-time ms`;
 
-const errorResFormat = `${getIPAddressFormat()}\n:method\n:url\n:status -\n:response-time ms\nerror: :message\n`;
+const errorResFormat = `${getIPAddressFormat()}:status :method :url (:res[content-length]) - :response-time ms`;
 
 export const successHandler = morgan(successResFormat, {
   skip: (req, res) => res.statusCode >= 400,

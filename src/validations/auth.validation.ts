@@ -8,4 +8,16 @@ const register = {
   }),
 };
 
-export default { register };
+const login = {
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(7).required(),
+  }),
+};
+
+const getMe = {
+  headers: Joi.object().keys({
+    authorization: Joi.string().token(),
+  }),
+};
+export default { register, login, getMe };
