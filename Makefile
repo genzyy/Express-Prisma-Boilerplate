@@ -30,31 +30,31 @@ dependencies: ## Install dependencies required by the application
 	yarn install
 
 .PHONY: infra-up
-infra-up:
+infra-up: ## Run docker images
 	docker-compose -f ./docker-compose.yml up -d
 
 .PHONY: infra-down
-infra-down:
+infra-down: ## Stop docker images
 	docker-compose down
 
 .PHONY: run
-run:
+run: ## Run api in dev environment
 	yarn dev
 
 .PHONY: build
-build:
+build: ## Build project
 	yarn build
 
 .PHONY: check-format
-check-format:
+check-format: ## Check format using eslint and prettier
 	yarn run lint && yarn run prettier
 
 .PHONY: format
-format:
+format: ## Format project with eslint and prettier
 	yarn run lint:fix && yarn run prettier:fix
 
 .PHONY: db-generate
-db-generate:
+db-generate: ## Apply new model changes to db using prisma orm
 	yarn run prisma generate
 
 .PHONY: db-push

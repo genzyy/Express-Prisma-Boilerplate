@@ -8,6 +8,7 @@ const envVarsSchema = Joi.object()
   .keys({
     ENVIRONMENT: Joi.string().valid('production', 'development', 'staging').required(),
     PORT: Joi.number().default(3000),
+    REDIS_URL: Joi.string().required(),
     JWT_SECRET: Joi.string().required(),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().required(),
     JWT_REFRESH_EXPIRATION_DAYS: Joi.number().required(),
@@ -28,6 +29,7 @@ if (error) {
 export default {
   environment: envVars.ENVIRONMENT,
   port: envVars.PORT,
+  redisUrl: envVars.REDIS_URL,
   logging: {
     showSqlQueries: envVars.SHOW_SQL_QUERIES,
   },
