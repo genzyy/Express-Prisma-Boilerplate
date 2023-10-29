@@ -29,6 +29,7 @@ The template aims to be production ready with strict schemas & types, security m
 | Winston           | Error logging                                                             |
 | Morgan            | HTTP Request logger                                                       |
 | ESLint & Prettier | Enforce code style and formatting                                         |
+| Redis             | Redis backend for caching                                                 |
 
 ## Features
 
@@ -39,6 +40,7 @@ The template aims to be production ready with strict schemas & types, security m
 - Scalable architecture
 - Multiple environment setup
 - Concise logs and errors
+- Caching
 
 ## Guide
 
