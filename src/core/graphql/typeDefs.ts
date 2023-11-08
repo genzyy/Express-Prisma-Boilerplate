@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const typeDefs = gql`
-  input QueryUserRequest {
+  input UserRequest {
     uuid: String
   }
 
@@ -9,7 +9,7 @@ const typeDefs = gql`
     uuid: String!
     email: String
     name: String!
-    created: DateTime
+    created: DateTime!
   }
 
   type ApiError {
@@ -18,7 +18,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    queryUserDetails(request: QueryUserRequest): QueryUserResponse
+    userDetails(request: UserRequest): UserResponse
   }
 `;
 

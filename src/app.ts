@@ -6,10 +6,12 @@ import passport from 'passport';
 
 import config from './core/config';
 import morgan from './core/morgan';
-import routes from './routes/v1';
+import { startApolloServer } from './core/graphql/apollo';
 import JwtStrategy from './core/passport';
-import { NotFound } from './utils/ApiError';
 import { errorConverter, errorHandler } from './core/middlewares/error';
+
+import routes from './routes/v1';
+import { NotFound } from './utils/ApiError';
 
 const app = express();
 
@@ -34,6 +36,8 @@ app.use((req, res, next) => {
 
 app.use(errorConverter);
 app.use(errorHandler);
+
+startApolloServer();
 
 app.use('/v1', routes);
 
