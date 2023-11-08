@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
+    "@sentry/integrations": "^7.79.0",
+    "@sentry/node": "^7.79.0",
     "@types/bcryptjs": "^2.4.4",
     "@types/nodemailer": "^6.4.11",
     "bcryptjs": "^2.4.3",
