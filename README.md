@@ -30,6 +30,7 @@ The template aims to be production ready with strict schemas & types, security m
 | Morgan            | HTTP Request logger                                                       |
 | ESLint & Prettier | Enforce code style and formatting                                         |
 | Redis             | Redis backend for caching                                                 |
+| Sentry            | Monitoring                                                                |
 
 ## Features
 
@@ -110,6 +111,10 @@ It sort of creates a schema which can be used in different files, with static ty
 [morgan](https://github.com/expressjs/morgan) and [winston](https://www.npmjs.com/package/winston) are being used for logging endpoint calls, errors. Winston is mostly setup for formatting how the error should be logged and with what log level. While morgan is used to get request and error details and for `production` env, morgan provides logging with remote IP address details.
 
 For SQL queries, a basic middleware setup is present in `src/core/prisma/client.ts`.
+
+### Monitoring
+
+The project contains a basic [Sentry](https://sentry.io/welcome/) setup for monitoring. You can add new integrations and change config based on your requirements.
 
 ### Repositories (CRUD actions) and Types
 
