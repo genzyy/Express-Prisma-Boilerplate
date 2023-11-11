@@ -17,6 +17,11 @@ const envVarsSchema = Joi.object()
     SHOW_SQL_QUERIES: Joi.bool().default(false),
     SENTRY_DSN: Joi.string().default(''),
     SENTRY_ENVIRONMENT: Joi.string().default('development'),
+    QUEUE_REDIS_HOST: Joi.string().default(''),
+    QUEUE_REDIS_PORT: Joi.number().default(6379),
+    QUEUE_CONCURRENCY: Joi.number().default(1),
+    AWS_REGION: Joi.string().default(''),
+    AWS_SES_API_VERSION: Joi.string().default(''),
   })
   .unknown();
 
@@ -45,5 +50,14 @@ export default {
   sentry: {
     dsn: envVars.SENTRY_DSN,
     environment: envVars.SENTRY_ENVIRONMENT,
+  },
+  queue: {
+    redisHost: envVars.QUEUE_REDIS_HOST,
+    redisPort: envVars.QUEUE_REDIS_PORT,
+    concurrency: envVars.QUEUE_CONCURRENCY,
+  },
+  aws: {
+    region: envVars.AWS_REGION,
+    ses_api_version: envVars.AWS_SES_API_VERSION,
   },
 };
