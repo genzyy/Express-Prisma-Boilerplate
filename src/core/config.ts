@@ -17,6 +17,7 @@ const envVarsSchema = Joi.object()
     SHOW_SQL_QUERIES: Joi.bool().default(false),
     SENTRY_DSN: Joi.string().default(''),
     SENTRY_ENVIRONMENT: Joi.string().default('development'),
+    COMPANY_SENDER_EMAIL: Joi.string().email().default('no-reply@company.com'),
     QUEUE_REDIS_HOST: Joi.string().default(''),
     QUEUE_REDIS_PORT: Joi.number().default(6379),
     QUEUE_CONCURRENCY: Joi.number().default(1),
@@ -51,10 +52,13 @@ export default {
     dsn: envVars.SENTRY_DSN,
     environment: envVars.SENTRY_ENVIRONMENT,
   },
-  queue: {
-    redisHost: envVars.QUEUE_REDIS_HOST,
-    redisPort: envVars.QUEUE_REDIS_PORT,
-    concurrency: envVars.QUEUE_CONCURRENCY,
+  emailService: {
+    companySenderEmail: envVars.COMPANY_SENDER_EMAIL,
+    queue: {
+      redisHost: envVars.QUEUE_REDIS_HOST,
+      redisPort: envVars.QUEUE_REDIS_PORT,
+      concurrency: envVars.QUEUE_CONCURRENCY,
+    },
   },
   aws: {
     region: envVars.AWS_REGION,

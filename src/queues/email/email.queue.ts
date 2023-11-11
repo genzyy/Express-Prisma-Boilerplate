@@ -6,7 +6,7 @@ export const EMAIL_QUEUE_NAME = 'mail-queue';
 
 export const emailQueue = new Queue<Email>(EMAIL_QUEUE_NAME, {
   connection: {
-    host: config.queue.redisHost,
-    port: config.queue.redisPort,
+    host: config.emailService.queue.redisHost,
+    port: config.emailService.queue.redisPort,
   },
 });

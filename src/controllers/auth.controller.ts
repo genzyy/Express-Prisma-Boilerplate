@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import userRepository from '../repositories/user';
 import catchAsync from '../utils/catchAsync';
 import JwtService from '../services/jwt.service';
+import EmailService from '../services/email.service';
 import { NotFound, Unauthorized } from '../utils/ApiError';
 import exclude from '../utils/exclude';
 import { UserReturn } from '../types/user';
@@ -11,6 +12,8 @@ const register = catchAsync(async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
   const user = await userRepository.createUser(username, email, password);
   const tokens = JwtService.generateAuthTokenForUser(user.id);
+
+  await EmailService.sendOnboardingEmail(user.email, user.name ?? '');
 
   return res.status(CREATED).send({ user: exclude(user, ['id', 'password', 'signedOut']), tokens });
 });
