@@ -9,6 +9,7 @@ import morgan from './core/morgan';
 import routes from './routes/v1';
 import JwtStrategy from './core/passport';
 import { NotFound } from './utils/ApiError';
+import { StartAllJobs } from './jobs';
 import { errorConverter, errorHandler } from './core/middlewares/error';
 
 const app = express();
@@ -34,6 +35,8 @@ app.use((req, res, next) => {
 
 app.use(errorConverter);
 app.use(errorHandler);
+
+StartAllJobs();
 
 app.use('/v1', routes);
 

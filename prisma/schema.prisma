@@ -7,6 +7,14 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model ApiMetadata {
+    id      Int      @id @default(autoincrement())
+    key     String   @unique
+    value   String
+    created DateTime @default(now())
+    updated DateTime @updatedAt
+}
+
 model User {
     id        Int       @id @default(autoincrement())
     uuid      String    @default(uuid()) @db.Uuid
