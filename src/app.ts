@@ -30,6 +30,10 @@ app.use(compression());
 app.use(passport.initialize());
 passport.use('jwt', JwtStrategy);
 
+if (config.environment != 'development') StartAllJobs();
+
+app.use('/v1', routes);
+
 app.use((req, res, next) => {
   next(new NotFound());
 });
@@ -37,9 +41,5 @@ app.use((req, res, next) => {
 app.use(errorConverter);
 app.use(errorHandler);
 app.use(ValidateApiMetadata);
-
-StartAllJobs();
-
-app.use('/v1', routes);
 
 export default app;

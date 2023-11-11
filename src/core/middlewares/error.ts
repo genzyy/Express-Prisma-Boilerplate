@@ -7,14 +7,14 @@ import ApiError from '../../utils/ApiError';
 
 export const errorConverter: ErrorRequestHandler = (err, req, res, next) => {
   let error = undefined;
-  const { statusCode: errStatusCode, message: errMessage, stack } = err;
+  const { statusCode: errStatusCode, message: errMessage } = err;
   if (!(err instanceof ApiError)) {
     const statusCode =
       errStatusCode || err instanceof Prisma.PrismaClientKnownRequestError
         ? httpStatus.BAD_REQUEST
         : httpStatus.SERVICE_UNAVAILABLE;
     const message = errMessage || httpStatus[statusCode];
-    error = new ApiError(statusCode, message, false, stack);
+    error = new ApiError(statusCode, message, false);
   }
   next(error);
 };
@@ -22,7 +22,7 @@ export const errorConverter: ErrorRequestHandler = (err, req, res, next) => {
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let { statusCode, message } = err;
-  const { isOperational, stack } = err;
+  const { isOperational } = err;
   if (config.environment === 'production' && !isOperational) {
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     message = httpStatus[statusCode];
@@ -33,7 +33,6 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   const response = {
     code: statusCode,
     message,
-    ...(config.environment === 'development' && { stack }),
   };
 
   if (config.environment === 'development') {

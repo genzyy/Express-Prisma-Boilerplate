@@ -20,7 +20,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
 
 const login = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const accessToken = getUserAccessToken(req);
+  const accessToken = await getUserAccessToken(req);
   const userId = JwtService.verifyToken(accessToken);
   const user = await userRepository.getUserByEmailAndId(email, userId);
 
@@ -33,14 +33,14 @@ const login = catchAsync(async (req: Request, res: Response) => {
   return res.send(OK).send({ user: exclude(user, ['password', 'signedOut']) });
 });
 
-const getMe = async (req: Request, res: Response) => {
-  const accessToken = getUserAccessToken(req);
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const accessToken = await getUserAccessToken(req);
   const userId = JwtService.verifyToken(accessToken);
   const dbUser = await userRepository.getUser(userId, UserReturn);
   return res.status(OK).send({ ...dbUser });
-};
+});
 
-const getUserAccessToken = (req: Request): string => {
+const getUserAccessToken = async (req: Request): Promise<string> => {
   const { authorization } = req.headers;
   const values = authorization?.split(' ');
   if (values && values.length >= 2) return values[1];
