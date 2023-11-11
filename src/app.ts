@@ -11,6 +11,7 @@ import JwtStrategy from './core/passport';
 import { NotFound } from './utils/ApiError';
 import { StartAllJobs } from './jobs';
 import { errorConverter, errorHandler } from './core/middlewares/error';
+import { ValidateApiStatus } from './core/middlewares/apiStatus';
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 
 app.use(errorConverter);
 app.use(errorHandler);
+app.use(ValidateApiStatus);
 
 StartAllJobs();
 

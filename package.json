@@ -2,7 +2,6 @@
   "name": "express-prisma-boilerplate",
   "version": "1.0.0",
   "main": "index.ts",
-  "type": "module",
   "license": "MIT",
   "author": "Rishit",
   "scripts": {

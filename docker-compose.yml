@@ -11,3 +11,21 @@ services:
       - '5432:5432'
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.2.3
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis:/data
+
+  redis-queue:
+    image: redis:7.2.3
+    ports:
+      - '6380:6380'
+    volumes:
+      - redis:/queue-data
+
+volumes:
+  redis:
+  redis-queue:

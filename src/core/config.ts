@@ -23,6 +23,7 @@ const envVarsSchema = Joi.object()
     QUEUE_CONCURRENCY: Joi.number().default(1),
     AWS_REGION: Joi.string().default(''),
     AWS_SES_API_VERSION: Joi.string().default(''),
+    API_STATUS: Joi.string().default(''),
   })
   .unknown();
 
@@ -38,6 +39,9 @@ export default {
   environment: envVars.ENVIRONMENT,
   port: envVars.PORT,
   redisUrl: envVars.REDIS_URL,
+  api: {
+    status: envVars.API_STATUS,
+  },
   logging: {
     showSqlQueries: envVars.SHOW_SQL_QUERIES,
   },

@@ -11,3 +11,8 @@ export const ApiMetadatReturn = include<ApiMetadataModel, Key>([
   'created',
   'updated',
 ]);
+
+export enum ApiStatus {
+  Live = 'live',
+  Maintenance = 'Maintenance',
+}
