@@ -1,9 +1,9 @@
 import { Worker } from 'bullmq';
 import config from '../../core/config';
 
-const MAIL_WORKER_NAME = 'MailWorker';
+const EMAIL_WORKER_IDENTIFIER = 'MailWorker';
 
-const EmailWorker = new Worker(MAIL_WORKER_NAME, __dirname + 'email.processor.ts', {
+const EmailWorker = new Worker(EMAIL_WORKER_IDENTIFIER, __dirname + 'email.processor.ts', {
   connection: {
     host: config.emailService.queue.redisHost,
     port: config.emailService.queue.redisPort,

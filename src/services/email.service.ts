@@ -1,4 +1,4 @@
-import { emailQueue, EMAIL_QUEUE_NAME } from '../queues/email/email.queue';
+import { emailQueue, EMAIL_QUEUE_IDENTIFIER } from '../queues/email/email.queue';
 import config from '../core/config';
 import { Email } from '../types/email';
 
@@ -9,7 +9,7 @@ const sendOnboardingEmail = async (recipient: string, name: string) => {
     html: `<h1>Welcome ${name}</h1>`,
     subject: `Welcome to the app, ${name}`,
   };
-  await emailQueue.add(EMAIL_QUEUE_NAME, emailData);
+  await emailQueue.add(EMAIL_QUEUE_IDENTIFIER, emailData);
 };
 
 export default { sendOnboardingEmail };
