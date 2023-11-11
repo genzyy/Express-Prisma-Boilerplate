@@ -3,7 +3,7 @@ import config from '../config';
 import { ApiStatus } from '../../types/apiMetadata';
 import { ApiUnavailable } from '../../utils/ApiError';
 
-export const ValidateApiStatus = async (req: Request, res: Response, next: NextFunction) => {
+export const ValidateApiMetadata = async (req: Request, res: Response, next: NextFunction) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (async () => {
     if (config.api.status === ApiStatus.Maintenance) throw new ApiUnavailable();

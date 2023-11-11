@@ -13,6 +13,9 @@ export const ApiMaintenanceJob = cron.schedule(
       apiStatus = await apiMetadataRepository.createApiMetadata('status', ApiStatus.Maintenance);
     }
     config.api.status = apiStatus.value;
+    if (config.api.status === ApiStatus.Live) logger.info('Api is live.');
+    else if (config.api.status === ApiStatus.Maintenance)
+      logger.warn('Api is in maintenance mode.');
   },
   {
     scheduled: false,
