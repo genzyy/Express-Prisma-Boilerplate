@@ -1,23 +1,13 @@
-import { NOT_FOUND, UNAUTHORIZED, FORBIDDEN, BAD_REQUEST } from 'http-status';
+import { NOT_FOUND, UNAUTHORIZED, FORBIDDEN, BAD_REQUEST, SERVICE_UNAVAILABLE } from 'http-status';
 
 class ApiError extends Error {
   statusCode: number;
   isOperational: boolean;
 
-  constructor(
-    statusCode: number,
-    message: string | undefined,
-    isOperational: boolean = true,
-    stack: string = '',
-  ) {
+  constructor(statusCode: number, message: string | undefined, isOperational: boolean = true) {
     super(message);
     this.statusCode = statusCode;
     this.isOperational = isOperational;
-    if (stack) {
-      this.stack = stack;
-    } else {
-      Error.captureStackTrace(this, this.constructor);
-    }
   }
 }
 
@@ -56,6 +46,14 @@ class BadRequest extends ApiError {
   }
 }
 
+class ApiUnavailable extends ApiError {
+  message: string;
+  constructor(message: string = 'Api is on maintenance mode.') {
+    super(SERVICE_UNAVAILABLE, message);
+    this.message = message;
+  }
+}
+
 export default ApiError;
 
-export { Unauthorized, Forbidden, BadRequest, NotFound };
+export { Unauthorized, Forbidden, BadRequest, NotFound, ApiUnavailable };
