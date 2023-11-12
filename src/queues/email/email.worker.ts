@@ -1,14 +1,8 @@
 import { Worker } from 'bullmq';
-import config from '../../core/config';
+import { redisConfig } from './redisConfig';
 
-const EMAIL_WORKER_IDENTIFIER = 'MailWorker';
-
-const EmailWorker = new Worker(EMAIL_WORKER_IDENTIFIER, __dirname + 'email.processor.ts', {
-  connection: {
-    host: config.emailService.queue.redisHost,
-    port: config.emailService.queue.redisPort,
-  },
-  concurrency: config.emailService.queue.concurrency,
+const EmailWorker = new Worker('email-queue', __dirname + '/email.processor.ts', {
+  connection: redisConfig,
 });
 
 export default EmailWorker;

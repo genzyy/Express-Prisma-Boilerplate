@@ -13,7 +13,6 @@ const catchAsync =
     next: NextFunction,
   ) => {
     Promise.resolve(fn(req, res, next)).catch((err) => {
-      console.log('yes');
       return next(err);
     });
   };

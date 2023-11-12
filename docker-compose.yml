@@ -22,9 +22,11 @@ services:
   redis-queue:
     image: redis:7.2.3
     ports:
-      - '6380:6380'
+      - '6380:6379'
+    expose:
+      - '6380'
     volumes:
-      - redis:/queue-data
+      - redis:/data
 
 volumes:
   redis:
