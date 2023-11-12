@@ -1,9 +1,7 @@
 import { Worker } from 'bullmq';
-import { redisConfig } from './redisConfig';
+import { queueRedisConfig } from './queueRedisConfig';
 import { EMAIL_QUEUE_IDENTIFIER } from '../../types/email';
 
-const EmailWorker = new Worker(EMAIL_QUEUE_IDENTIFIER, __dirname + '/email.processor.ts', {
-  connection: redisConfig,
+export const EmailWorker = new Worker(EMAIL_QUEUE_IDENTIFIER, __dirname + '/email.processor.ts', {
+  connection: queueRedisConfig,
 });
-
-export default EmailWorker;
