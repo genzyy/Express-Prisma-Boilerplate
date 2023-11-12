@@ -1,4 +1,4 @@
-import emailService from './email.service';
-import jwtService from './jwt.service';
+import EmailService from './email.service';
+import JwtService from './jwt.service';
 
-export { emailService, jwtService };
+export { EmailService, JwtService };

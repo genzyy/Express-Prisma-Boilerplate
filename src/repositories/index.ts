@@ -1,4 +1,4 @@
-import userRepository from './user';
-import apiMetadataRepository from './apiMetadata';
+import UserRepository from './user';
+import ApiMetadataRepository from './apiMetadata';
 
-export { userRepository, apiMetadataRepository };
+export { UserRepository, ApiMetadataRepository };
