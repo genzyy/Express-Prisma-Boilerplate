@@ -45,6 +45,10 @@ run: ## Run api in dev environment
 build: ## Build project
 	yarn build
 
+.PHONY: test
+test: ## Run tests
+	yarn run test
+
 .PHONY: check-format
 check-format: ## Check format using eslint and prettier
 	yarn run lint && yarn run prettier

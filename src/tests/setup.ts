@@ -1,3 +1,4 @@
+jest.useFakeTimers();
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
 import supertest from 'supertest';

@@ -6,7 +6,7 @@ dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 const envVarsSchema = Joi.object()
   .keys({
-    ENVIRONMENT: Joi.string().valid('production', 'development', 'staging').required(),
+    ENVIRONMENT: Joi.string().valid('production', 'development', 'staging', 'test').required(),
     PORT: Joi.number().default(3000),
     REDIS_URL: Joi.string().required(),
     JWT_SECRET: Joi.string().required(),
