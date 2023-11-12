@@ -1,13 +1,11 @@
-import { Email } from '../../types/email';
+import { EMAIL_QUEUE_IDENTIFIER, Email } from '../../types/email';
 import { Queue, Job } from 'bullmq';
 import { redisConfig } from './redisConfig';
 import EmailWorker from './email.worker';
 import logger from '../../core/logger';
 import { captureException } from '../../core/sentry';
 
-export const EMAIL_QUEUE_IDENTIFIER = 'email-queue';
-
-export const emailQueue = new Queue<Email>('email-queue', {
+export const emailQueue = new Queue<Email>(EMAIL_QUEUE_IDENTIFIER, {
   connection: redisConfig,
 });
 

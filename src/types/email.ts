@@ -4,3 +4,4 @@ export interface Email {
   subject: string;
   html: string;
 }
+export const EMAIL_QUEUE_IDENTIFIER = 'email-queue';
