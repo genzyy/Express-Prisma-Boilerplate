@@ -1,16 +1,15 @@
 import { CREATED, OK } from 'http-status';
 import { Request, Response } from 'express';
-import userRepository from '../repositories/user';
-import catchAsync from '../utils/catchAsync';
-import JwtService from '../services/jwt.service';
+import { UserRepository } from '../repositories';
+import { catchAsync, exclude } from '../utils';
+import { JwtService } from '../services';
 import EmailService from '../services/email.service';
 import { NotFound, Unauthorized } from '../utils/ApiError';
-import exclude from '../utils/exclude';
 import { UserReturn } from '../types/user';
 
 const register = catchAsync(async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
-  const user = await userRepository.createUser(username, email, password);
+  const user = await UserRepository.createUser(username, email, password);
   const tokens = JwtService.generateAuthTokenForUser(user.id);
 
   await EmailService.sendOnboardingEmail(user.email, user.name ?? '');
@@ -22,7 +21,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const accessToken = await getUserAccessToken(req);
   const userId = JwtService.verifyToken(accessToken);
-  const user = await userRepository.getUserByEmailAndId(email, userId);
+  const user = await UserRepository.getUserByEmailAndId(email, userId);
 
   if (!user) {
     throw new NotFound('User not found');
@@ -36,7 +35,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
 const getMe = catchAsync(async (req: Request, res: Response) => {
   const accessToken = await getUserAccessToken(req);
   const userId = JwtService.verifyToken(accessToken);
-  const dbUser = await userRepository.getUser(userId, UserReturn);
+  const dbUser = await UserRepository.getUser(userId, UserReturn);
   return res.status(OK).send({ ...dbUser });
 });
 

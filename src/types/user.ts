@@ -1,6 +1,6 @@
 import { User as UserModel } from '@prisma/client';
 import Joi from 'joi';
-import include from '../utils/include';
+import { include } from '../utils';
 
 export type Key = keyof UserModel;
 
