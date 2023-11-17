@@ -60,3 +60,7 @@ db-generate: ## Apply new model changes to db using prisma orm
 .PHONY: db-push
 db-push:
 	yarn run db:push
+
+.PHONY: test
+test:
+	yarn run test

@@ -38,6 +38,10 @@ app.use((req, res, next) => {
   next(new NotFound());
 });
 
+app.get('/', (req, res) => {
+  return res.status(200).json({ message: 'API healthy' });
+});
+
 app.use(errorConverter);
 app.use(errorHandler);
 app.use(ValidateApiMetadata);
