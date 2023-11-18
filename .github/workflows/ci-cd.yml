@@ -56,11 +56,6 @@ jobs:
       - name: run docker
         run: make infra-up
 
-      - name: Setup environment variables
-        uses: c-py/action-dotenv-to-setenv@v2
-        with:
-          env-file: .env.test
-
       - name: Run jest tests
         run: make test
 
