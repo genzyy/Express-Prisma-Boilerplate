@@ -37,6 +37,7 @@ if (error) {
 
 export default {
   environment: envVars.ENVIRONMENT,
+  devEnvironments: ['development', 'test'],
   port: envVars.PORT,
   redisUrl: envVars.REDIS_URL,
   api: {

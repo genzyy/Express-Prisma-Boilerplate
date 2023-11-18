@@ -30,7 +30,7 @@ app.use(compression());
 app.use(passport.initialize());
 passport.use('jwt', JwtStrategy);
 
-if (config.environment != 'development') StartAllJobs();
+if (!config.devEnvironments.includes(config.environment)) StartAllJobs();
 
 app.use(mainRouter);
 

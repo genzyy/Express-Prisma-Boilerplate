@@ -37,6 +37,11 @@ services:
     volumes:
       - redis:/data
 
+  redis-test:
+    image: redis:7.2.3
+    ports:
+      - '6381:6379'
+
 volumes:
   redis:
   redis-queue:

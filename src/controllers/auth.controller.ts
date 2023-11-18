@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { UserRepository } from '../repositories';
 import { catchAsync, exclude } from '../utils';
 import { JwtService } from '../services';
-// import EmailService from '../services/email.service';
+import EmailService from '../services/email.service';
 import { NotFound, Unauthorized } from '../utils/ApiError';
 import { UserReturn } from '../types/user';
 
@@ -12,7 +12,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
   const user = await UserRepository.createUser(username, email, password);
   const tokens = JwtService.generateAuthTokenForUser(user.id);
 
-  // await EmailService.sendOnboardingEmail(user.email, user.name ?? '');
+  await EmailService.sendOnboardingEmail(user.email, user.username);
 
   return res.status(OK).send({ user: exclude(user, ['id', 'password', 'signedOut']), tokens });
 });
