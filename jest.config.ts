@@ -7,4 +7,5 @@ module.exports = {
   restoreMocks: true,
   coveragePathIgnorePatterns: ['node_modules', 'src/config', 'src/app.ts', 'tests'],
   coverageReporters: ['text', 'lcov', 'clover', 'html'],
+  setupFilesAfterEnv: ['./jest.setup.js'],
 };

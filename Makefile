@@ -63,7 +63,8 @@ db-push:
 
 .PHONY: test
 test: ## Run tests
-	export DATABASE_URL=postgresql://test-user:test-password@127.0.0.1:5433/my-db
+	$(eval include .env.test)
+	$(eval export $(sh sed 's/=.*//' .env.test))
 	yarn run prisma generate
 	yarn run db:push
 	yarn run test
