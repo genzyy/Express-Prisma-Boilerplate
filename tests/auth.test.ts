@@ -1,5 +1,4 @@
-import request from 'supertest';
-import app from '../src/app';
+import { client } from './setup';
 import { faker } from '@faker-js/faker';
 
 const AUTH_URL = '/v1/auth';
@@ -11,7 +10,7 @@ describe('Register', () => {
       username: faker.internet.userName(),
       password: faker.internet.password(),
     };
-    const response = await request(app).post(`${AUTH_URL}/register`).send(newUser);
+    const response = await client.post(`${AUTH_URL}/register`).send(newUser);
     expect(response.status).toBe(200);
   }, 10000);
 });

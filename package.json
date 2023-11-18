@@ -17,7 +17,7 @@
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
     "prepare": "husky install",
     "build": "rimraf build && tsc -p tsconfig.json",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles"
+    "test": "NODE_ENV=test && NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "@aws-sdk/types": "^3.449.0",

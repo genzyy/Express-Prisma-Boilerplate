@@ -45,10 +45,6 @@ run: ## Run api in dev environment
 build: ## Build project
 	yarn build
 
-.PHONY: test
-test: ## Run tests
-	yarn run test
-
 .PHONY: check-format
 check-format: ## Check format using eslint and prettier
 	yarn run lint && yarn run prettier
@@ -64,3 +60,10 @@ db-generate: ## Apply new model changes to db using prisma orm
 .PHONY: db-push
 db-push:
 	yarn run db:push
+
+.PHONY: test
+test: ## Run tests
+	export DATABASE_URL=postgresql://test-user:test-password@127.0.0.1:5433/my-db
+	yarn run prisma generate
+	yarn run db:push
+	yarn run test
