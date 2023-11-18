@@ -35,6 +35,7 @@ if (!config.devEnvironments.includes(config.environment)) StartAllJobs();
 app.use(mainRouter);
 
 app.use((req, res, next) => {
+  console.log('yes');
   next(new NotFound());
 });
 

@@ -35,6 +35,7 @@ export const UserReturn = include<UserModel, Key>([
   'age',
   'phone',
   'created',
+  'password',
 ]);
 
 export const UserReturnWithPassword = include<UserModel, Key>([
