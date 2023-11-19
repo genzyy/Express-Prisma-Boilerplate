@@ -46,4 +46,14 @@ const getUserAccessToken = async (req: Request): Promise<string> => {
   throw new Unauthorized('Token missing.');
 };
 
-export default { register, login, getMe };
+const logOutUser = catchAsync(async (req, res) => {
+  const accessToken = await getUserAccessToken(req);
+  const userId = JwtService.verifyToken(accessToken);
+  const dbUser = await UserRepository.getUser(userId, UserReturn);
+  if (!dbUser) throw new NotFound('User not found.');
+  await UserRepository.updateSignedOut(userId);
+
+  return res.status(OK).send({ message: 'User signed out.' });
+});
+
+export default { register, login, getMe, logOutUser };

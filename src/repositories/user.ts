@@ -58,4 +58,23 @@ const getUserByUsername = async (
   })) as Promise<User | null>;
 };
 
-export default { createUser, getUser, getUserByEmail, getUserByEmailAndId, getUserByUsername };
+const updateSignedOut = async (id: number, returnKeys: object = UserBasicReturn): Promise<User> => {
+  return (await prisma.user.update({
+    select: returnKeys,
+    where: {
+      id: id,
+    },
+    data: {
+      signedOut: new Date(),
+    },
+  })) as Promise<User>;
+};
+
+export default {
+  createUser,
+  getUser,
+  getUserByEmail,
+  getUserByEmailAndId,
+  getUserByUsername,
+  updateSignedOut,
+};

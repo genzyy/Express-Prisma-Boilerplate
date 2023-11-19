@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
@@ -15,7 +16,7 @@ import { ValidateApiMetadata } from './core/middlewares/apiStatus';
 
 const app = express();
 
-if (config.environment !== 'test') {
+if (!config.devEnvironments.includes(config.environment)) {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
@@ -27,15 +28,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 
+app.use(
+  session({
+    secret: config.sessionSecret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  }),
+);
 app.use(passport.initialize());
 passport.use('jwt', JwtStrategy);
+
+app.use(passport.authenticate('jwt'));
+app.use(passport.session());
 
 if (!config.devEnvironments.includes(config.environment)) StartAllJobs();
 
 app.use(mainRouter);
 
 app.use((req, res, next) => {
-  console.log('yes');
   next(new NotFound());
 });
 

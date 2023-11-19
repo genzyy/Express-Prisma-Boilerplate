@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 import { client } from './setup';
 import { EmailService } from '../src/services';
 import { UserRepository } from '../src/repositories';
+import { UserReturn } from '../src/types/user';
 
 const AUTH_URL = '/v1/auth';
 
@@ -57,5 +58,16 @@ describe('test /auth routes', () => {
       .send({ email: newUser.email, password: newUser.password });
 
     expect(response.statusCode).toBe(200);
+  });
+
+  it('logs me out', async () => {
+    const response = await client
+      .post(`${AUTH_URL}/logout`)
+      .set('Authorization', `Bearer ${tokens.accessToken.token}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual({ message: 'User signed out.' });
+    const userFromDb = await UserRepository.getUserByEmail(newUser.email, UserReturn);
+    expect(userFromDb?.signedOut).toBeDefined();
   });
 });
