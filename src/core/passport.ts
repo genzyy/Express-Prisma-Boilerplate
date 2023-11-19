@@ -37,13 +37,16 @@ const jwtVerify: VerifyCallback = async (payload, done) => {
       : null;
 
     if (
-      !currentUser ||
-      (currentUser.signedOut && signedOutTimestamp && payload.iat < signedOutTimestamp)
+      (!currentUser && !payload) ||
+      (currentUser &&
+        currentUser.signedOut &&
+        signedOutTimestamp &&
+        payload.iat <= signedOutTimestamp)
     ) {
-      return done(new Unauthorized('Invalid token.'), false);
+      return done(new Unauthorized('Expired token.'), false);
     }
 
-    done(null, currentUser);
+    done(null, currentUser ?? false);
   } catch (error) {
     done(error, false);
   }

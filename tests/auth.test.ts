@@ -70,4 +70,14 @@ describe('test /auth routes', () => {
     const userFromDb = await UserRepository.getUserByEmail(newUser.email, UserReturn);
     expect(userFromDb?.signedOut).toBeDefined();
   });
+
+  it('returns 401 token invalid error', async () => {
+    const response = await client
+      .get(`${AUTH_URL}/me`)
+      .set('Authorization', `Bearer ${tokens.accessToken.token}`);
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.code).toStrictEqual(401);
+    expect(response.body.message).toStrictEqual('Expired token.');
+  });
 });

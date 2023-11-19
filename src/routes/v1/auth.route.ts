@@ -2,13 +2,14 @@ import express from 'express';
 import validate from '../../core/middlewares/validator';
 import authValidation from '../../validations/auth.validation';
 import { AuthController } from '../../controllers/';
+import auth from '../../core/middlewares/auth';
 
 const router = express.Router();
 
 router.post('/register', validate(authValidation.register), AuthController.register);
 router.post('/login', validate(authValidation.login), AuthController.login);
-router.post('/logout', AuthController.logOutUser);
-router.get('/me', validate(authValidation.getMe), AuthController.getMe);
-router.post('/refresh-tokens');
+router.route('/logout').post(auth(), AuthController.logOutUser);
+router.route('/me').get(auth(), validate(authValidation.getMe), AuthController.getMe);
+router.route('/refresh-tokens').post(auth());
 
 export default router;

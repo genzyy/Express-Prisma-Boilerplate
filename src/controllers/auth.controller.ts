@@ -21,8 +21,6 @@ const login = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await UserRepository.getUserByEmail(email);
 
-  console.log(user);
-
   if (!user) {
     throw new NotFound('User not found');
   }

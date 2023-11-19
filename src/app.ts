@@ -1,5 +1,4 @@
 import express from 'express';
-import session from 'express-session';
 import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
@@ -28,19 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 
-app.use(
-  session({
-    secret: config.sessionSecret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  }),
-);
 app.use(passport.initialize());
 passport.use('jwt', JwtStrategy);
-
-app.use(passport.authenticate('jwt'));
-app.use(passport.session());
 
 if (!config.devEnvironments.includes(config.environment)) StartAllJobs();
 
