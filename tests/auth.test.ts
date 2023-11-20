@@ -26,7 +26,6 @@ describe('test /auth routes', () => {
       'username',
       'role',
       'name',
-      'age',
       'created',
       'updated',
     ]);
