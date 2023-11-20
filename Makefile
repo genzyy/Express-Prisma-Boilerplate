@@ -53,9 +53,13 @@ check-format: ## Check format using eslint and prettier
 format: ## Format project with eslint and prettier
 	yarn run lint:fix && yarn run prettier:fix
 
-.PHONY: db-generate
-db-generate: ## Apply new model changes to db using prisma orm
-	yarn run prisma generate
+.PHONY: gen-migration
+gen-migration: ## Generate migration file
+	yarn run prisma generate --name "$(m)" --create-only
+
+.PHONY: apply-migration
+apply-migration: ## Apply migration file changes to db
+	yarn run prisma migrate dev
 
 .PHONY: db-push
 db-push:

@@ -24,7 +24,6 @@ model User {
     role      Role      @default(USER)
     name      String?   @db.VarChar(255)
     age       Int?
-    phone     String?   @db.VarChar(10)
     notes     Note[]
     created   DateTime  @default(now())
     updated   DateTime  @updatedAt
