@@ -14,7 +14,6 @@ const envVarsSchema = Joi.object()
     JWT_REFRESH_EXPIRATION_DAYS: Joi.number().required(),
     JWT_RESET_PASSWORD_EXPIRATION_MINUTES: Joi.number().required(),
     JWT_VERIFY_EMAIL_EXPIRATION_MINUTES: Joi.number().required(),
-    SESSION_SECRET: Joi.string().required(),
     SHOW_SQL_QUERIES: Joi.bool().default(false),
     SENTRY_DSN: Joi.string().default(''),
     SENTRY_ENVIRONMENT: Joi.string().default('development'),
@@ -54,7 +53,6 @@ export default {
     resetPasswordExpirationMinutes: envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
     verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
   },
-  sessionSecret: envVars.SESSION_SECRET,
   sentry: {
     dsn: envVars.SENTRY_DSN,
     environment: envVars.SENTRY_ENVIRONMENT,

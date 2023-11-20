@@ -15,5 +15,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await prisma.$executeRaw`TRUNCATE TABLE "User" CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Note" CASCADE`;
   await prisma.$disconnect();
 });
