@@ -55,7 +55,7 @@ format: ## Format project with eslint and prettier
 
 .PHONY: gen-migration
 gen-migration: ## Generate migration file
-	yarn run prisma generate --name "$(m)" --create-only
+	yarn run prisma migrate dev --name $(m) --create-only
 
 .PHONY: apply-migration
 apply-migration: ## Apply migration file changes to db

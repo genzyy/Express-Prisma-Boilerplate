@@ -12,7 +12,7 @@ describe('test /auth routes', () => {
   const newUser = {
     email: faker.internet.email(),
     username: faker.internet.userName(),
-    password: faker.internet.password(10),
+    password: faker.internet.password({ length: 10 }),
   };
   it('registers new user', async () => {
     const stub = sinon.stub(EmailService, 'sendOnboardingEmail');
