@@ -15,8 +15,8 @@ export const errorConverter: ErrorRequestHandler = (err, req, res, next) => {
         : httpStatus.SERVICE_UNAVAILABLE;
     const message = errMessage || httpStatus[statusCode];
     error = new ApiError(statusCode, message, false);
-  }
-  next(error);
+    next(error);
+  } else next(err);
 };
 
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars

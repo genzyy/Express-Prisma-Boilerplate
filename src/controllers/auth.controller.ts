@@ -1,4 +1,4 @@
-import { CREATED, OK } from 'http-status';
+import { OK } from 'http-status';
 import { Request, Response } from 'express';
 import { UserRepository } from '../repositories';
 import { catchAsync, exclude } from '../utils';
@@ -12,16 +12,14 @@ const register = catchAsync(async (req: Request, res: Response) => {
   const user = await UserRepository.createUser(username, email, password);
   const tokens = JwtService.generateAuthTokenForUser(user.id);
 
-  await EmailService.sendOnboardingEmail(user.email, user.name ?? '');
+  await EmailService.sendOnboardingEmail(user.email, user.username);
 
-  return res.status(CREATED).send({ user: exclude(user, ['id', 'password', 'signedOut']), tokens });
+  return res.status(OK).send({ user: exclude(user, ['id', 'password', 'signedOut']), tokens });
 });
 
 const login = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const accessToken = await getUserAccessToken(req);
-  const userId = JwtService.verifyToken(accessToken);
-  const user = await UserRepository.getUserByEmailAndId(email, userId);
+  const user = await UserRepository.getUserByEmail(email);
 
   if (!user) {
     throw new NotFound('User not found');
@@ -29,7 +27,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
 
   if (password !== user?.password) throw new Unauthorized('Password doesnt match.');
 
-  return res.send(OK).send({ user: exclude(user, ['password', 'signedOut']) });
+  return res.status(OK).send({ user: exclude(user, ['password', 'signedOut']) });
 });
 
 const getMe = catchAsync(async (req: Request, res: Response) => {
@@ -46,4 +44,14 @@ const getUserAccessToken = async (req: Request): Promise<string> => {
   throw new Unauthorized('Token missing.');
 };
 
-export default { register, login, getMe };
+const logOutUser = catchAsync(async (req, res) => {
+  const accessToken = await getUserAccessToken(req);
+  const userId = JwtService.verifyToken(accessToken);
+  const dbUser = await UserRepository.getUser(userId, UserReturn);
+  if (!dbUser) throw new NotFound('User not found.');
+  await UserRepository.updateSignedOut(userId);
+
+  return res.status(OK).send({ message: 'User signed out.' });
+});
+
+export default { register, login, getMe, logOutUser };

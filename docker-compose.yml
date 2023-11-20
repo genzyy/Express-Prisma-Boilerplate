@@ -12,6 +12,15 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
 
+  postgresql-test:
+    image: postgres:16.0-alpine
+    environment:
+      POSTGRES_USER: test-user
+      POSTGRES_PASSWORD: test-password
+      POSTGRES_DB: my-test-db
+    ports:
+      - '5433:5432'
+
   redis:
     image: redis:7.2.3
     ports:
@@ -27,6 +36,11 @@ services:
       - '6380'
     volumes:
       - redis:/data
+
+  redis-test:
+    image: redis:7.2.3
+    ports:
+      - '6381:6379'
 
 volumes:
   redis:

@@ -1,5 +1,5 @@
 import prisma from '../core/prisma/client';
-import { User, UserBasicReturn } from '../types/user';
+import { User, UserBasicReturn, UserReturn } from '../types/user';
 
 const createUser = async (username: string, email: string, password: string): Promise<User> => {
   return (await prisma.user.create({
@@ -22,7 +22,7 @@ const getUser = async (id: number, returnKeys: object = UserBasicReturn): Promis
 
 const getUserByEmail = async (
   email: string,
-  returnKeys: object = UserBasicReturn,
+  returnKeys: object = UserReturn,
 ): Promise<User | null> => {
   return (await prisma.user.findUnique({
     select: returnKeys,
@@ -58,4 +58,23 @@ const getUserByUsername = async (
   })) as Promise<User | null>;
 };
 
-export default { createUser, getUser, getUserByEmail, getUserByEmailAndId, getUserByUsername };
+const updateSignedOut = async (id: number, returnKeys: object = UserBasicReturn): Promise<User> => {
+  return (await prisma.user.update({
+    select: returnKeys,
+    where: {
+      id: id,
+    },
+    data: {
+      signedOut: new Date(),
+    },
+  })) as Promise<User>;
+};
+
+export default {
+  createUser,
+  getUser,
+  getUserByEmail,
+  getUserByEmailAndId,
+  getUserByUsername,
+  updateSignedOut,
+};

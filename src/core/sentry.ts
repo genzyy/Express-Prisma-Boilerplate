@@ -5,7 +5,6 @@ import config from './config';
 Sentry.init({
   dsn: config.sentry.dsn,
   environment: config.sentry.environment,
-  debug: true,
   attachStacktrace: true,
   normalizeDepth: 5,
   includeLocalVariables: true,

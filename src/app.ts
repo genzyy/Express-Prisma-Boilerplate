@@ -6,7 +6,7 @@ import passport from 'passport';
 
 import config from './core/config';
 import morgan from './core/morgan';
-import routes from './routes/v1';
+import { mainRouter } from './routes';
 import JwtStrategy from './core/passport';
 import { NotFound } from './utils/ApiError';
 import { StartAllJobs } from './jobs';
@@ -15,7 +15,7 @@ import { ValidateApiMetadata } from './core/middlewares/apiStatus';
 
 const app = express();
 
-if (config.environment !== 'test') {
+if (!config.devEnvironments.includes(config.environment)) {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
@@ -30,9 +30,9 @@ app.use(compression());
 app.use(passport.initialize());
 passport.use('jwt', JwtStrategy);
 
-if (config.environment != 'development') StartAllJobs();
+if (!config.devEnvironments.includes(config.environment)) StartAllJobs();
 
-app.use('/v1', routes);
+app.use(mainRouter);
 
 app.use((req, res, next) => {
   next(new NotFound());

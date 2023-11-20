@@ -60,3 +60,11 @@ db-generate: ## Apply new model changes to db using prisma orm
 .PHONY: db-push
 db-push:
 	yarn run db:push
+
+.PHONY: test
+test: ## Run tests
+	$(eval include .env.test)
+	$(eval export $(sh sed 's/=.*//' .env.test))
+	yarn run prisma generate
+	yarn run db:push
+	yarn run test

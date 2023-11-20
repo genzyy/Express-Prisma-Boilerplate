@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - '**'
+
+    
+jobs:
+  check-format-build:
+    name: Check, format & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install project deps
+        run: yarn --prefer-offline
+
+      - name: Check format
+        run: make check-format
+
+      - name: Build
+        run: make build
+
+  run-tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install project deps
+        run: yarn install
+
+      - name: run docker
+        run: make infra-up
+
+      - name: Run jest tests
+        run: make test
+
+      - name: stop docker
+        run: make infra-down
