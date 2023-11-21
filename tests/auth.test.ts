@@ -5,13 +5,12 @@ import { EmailService } from '../src/services';
 import { UserRepository } from '../src/repositories';
 import { UserReturn } from '../src/types/user';
 import prisma from '../src/core/prisma/client';
-import { Role } from '@prisma/client';
 
 const AUTH_URL = '/v1/auth';
 
 describe('test /auth routes', () => {
   let tokens: any = null;
-  const adminTokens: any = null;
+  let adminTokens: any = null;
   const newUser = {
     email: faker.internet.email(),
     username: faker.internet.userName(),
@@ -101,5 +100,15 @@ describe('test /auth routes', () => {
       await prisma.$queryRaw`SELECT role from "User" WHERE username = 'something';`;
 
     expect(adminUserRole[0]).toStrictEqual({ role: 'SUPERADMIN' });
+    adminTokens = response.body.tokens;
+  });
+
+  it('access admin route', async () => {
+    const response = await client
+      .get(`${AUTH_URL}/`)
+      .set('Authorization', `Bearer ${adminTokens.accessToken.token}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('users');
   });
 });
