@@ -21,7 +21,7 @@ model User {
     email          String    @unique
     password       String
     username       String    @unique
-    role           Role      @default(USER)
+    role           String    @default("user")
     activityStatus String    @default("active")
     name           String?   @db.VarChar(255)
     notes          Note[]
@@ -38,10 +38,4 @@ model Note {
     content String   @db.VarChar(255)
     created DateTime @default(now())
     updated DateTime @updatedAt
-}
-
-enum Role {
-    USER
-    SUPERADMIN
-    DATAMANAGER
 }

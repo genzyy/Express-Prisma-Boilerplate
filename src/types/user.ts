@@ -50,3 +50,9 @@ export enum UserActivityStatus {
   UnderSupervision = 'under supervision',
   Blocked = 'blocked',
 }
+
+export enum Role {
+  User = 'user',
+  Superadmin = 'superadmin',
+  Datamanager = 'datamanager',
+}

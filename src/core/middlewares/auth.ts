@@ -1,8 +1,8 @@
 import passport from 'passport';
 import ApiError, { Forbidden, Unauthorized } from '../../utils/ApiError';
 import { NextFunction, Request, Response } from 'express';
-import { User, Role } from '@prisma/client';
-import { UserActivityStatus } from '../../types/user';
+import { User } from '@prisma/client';
+import { Role, UserActivityStatus } from '../../types/user';
 
 const verifyCallback =
   (

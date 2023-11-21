@@ -93,13 +93,13 @@ describe('test /auth routes', () => {
       .send({ ...adminUser, username: 'something' });
     expect(response.status).toBe(200);
     const rowsUpdated =
-      await prisma.$executeRaw`UPDATE "User" SET role = 'SUPERADMIN' WHERE username = 'something';`;
+      await prisma.$executeRaw`UPDATE "User" SET role = 'superadmin' WHERE username = 'something';`;
 
     expect(rowsUpdated).toBe(1);
     const adminUserRole: string[] =
       await prisma.$queryRaw`SELECT role from "User" WHERE username = 'something';`;
 
-    expect(adminUserRole[0]).toStrictEqual({ role: 'SUPERADMIN' });
+    expect(adminUserRole[0]).toStrictEqual({ role: 'superadmin' });
     adminTokens = response.body.tokens;
   });
 
