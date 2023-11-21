@@ -17,6 +17,7 @@ export const UserKeys: string[] = [
   'password',
   'username',
   'role',
+  'activityStatus',
   'name',
   'created',
   'updated',
@@ -43,3 +44,9 @@ export const UserReturnWithPassword = include<UserModel, Key>([
 export const UReturn = Joi.object().keys({
   username: Joi.string().required(),
 });
+
+export enum UserActivityStatus {
+  Active = 'active',
+  UnderSupervision = 'under supervision',
+  Blocked = 'blocked',
+}

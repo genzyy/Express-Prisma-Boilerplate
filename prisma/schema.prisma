@@ -16,17 +16,18 @@ model ApiMetadata {
 }
 
 model User {
-    id        Int       @id @default(autoincrement())
-    uuid      String    @default(uuid()) @db.Uuid
-    email     String    @unique
-    password  String
-    username  String    @unique
-    role      Role      @default(USER)
-    name      String?   @db.VarChar(255)
-    notes     Note[]
-    created   DateTime  @default(now())
-    updated   DateTime  @updatedAt
-    signedOut DateTime?
+    id             Int       @id @default(autoincrement())
+    uuid           String    @default(uuid()) @db.Uuid
+    email          String    @unique
+    password       String
+    username       String    @unique
+    role           Role      @default(USER)
+    activityStatus String    @default("active")
+    name           String?   @db.VarChar(255)
+    notes          Note[]
+    created        DateTime  @default(now())
+    updated        DateTime  @updatedAt
+    signedOut      DateTime?
 }
 
 model Note {

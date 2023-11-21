@@ -70,6 +70,10 @@ const updateSignedOut = async (id: number, returnKeys: object = UserBasicReturn)
   })) as Promise<User>;
 };
 
+const getAll = async (returnKeys: object = UserBasicReturn): Promise<User[]> => {
+  return (await prisma.user.findMany({ select: returnKeys })) as unknown as Promise<User[]>;
+};
+
 export default {
   createUser,
   getUser,
@@ -77,4 +81,5 @@ export default {
   getUserByEmailAndId,
   getUserByUsername,
   updateSignedOut,
+  getAll,
 };

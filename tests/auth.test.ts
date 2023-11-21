@@ -4,12 +4,20 @@ import { client } from './setup';
 import { EmailService } from '../src/services';
 import { UserRepository } from '../src/repositories';
 import { UserReturn } from '../src/types/user';
+import prisma from '../src/core/prisma/client';
+import { Role } from '@prisma/client';
 
 const AUTH_URL = '/v1/auth';
 
 describe('test /auth routes', () => {
   let tokens: any = null;
+  const adminTokens: any = null;
   const newUser = {
+    email: faker.internet.email(),
+    username: faker.internet.userName(),
+    password: faker.internet.password({ length: 10 }),
+  };
+  const adminUser = {
     email: faker.internet.email(),
     username: faker.internet.userName(),
     password: faker.internet.password({ length: 10 }),
@@ -25,6 +33,7 @@ describe('test /auth routes', () => {
       'email',
       'username',
       'role',
+      'activityStatus',
       'name',
       'created',
       'updated',
@@ -77,5 +86,20 @@ describe('test /auth routes', () => {
     expect(response.statusCode).toBe(401);
     expect(response.body.code).toStrictEqual(401);
     expect(response.body.message).toStrictEqual('Expired token.');
+  });
+
+  it('creates an admin user', async () => {
+    const response = await client
+      .post(`${AUTH_URL}/register`)
+      .send({ ...adminUser, username: 'something' });
+    expect(response.status).toBe(200);
+    const rowsUpdated =
+      await prisma.$executeRaw`UPDATE "User" SET role = 'SUPERADMIN' WHERE username = 'something';`;
+
+    expect(rowsUpdated).toBe(1);
+    const adminUserRole: string[] =
+      await prisma.$queryRaw`SELECT role from "User" WHERE username = 'something';`;
+
+    expect(adminUserRole[0]).toStrictEqual({ role: 'SUPERADMIN' });
   });
 });

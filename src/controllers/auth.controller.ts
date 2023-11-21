@@ -54,4 +54,10 @@ const logOutUser = catchAsync(async (req, res) => {
   return res.status(OK).send({ message: 'User signed out.' });
 });
 
-export default { register, login, getMe, logOutUser };
+export const getAllUsers = catchAsync(async (req, res) => {
+  const users = await UserRepository.getAll();
+
+  return res.status(OK).send({ users });
+});
+
+export default { register, login, getMe, logOutUser, getAllUsers };
