@@ -12,6 +12,15 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
 
+  prisma-shadow-db:
+    image: postgres:16.0-alpine
+    environment:
+      POSTGRES_USER: shadow-user
+      POSTGRES_PASSWORD: shadow-password
+      POSTGRES_DB: shadow-db
+    ports:
+      - '5434:5432'
+
   postgresql-test:
     image: postgres:16.0-alpine
     environment:
