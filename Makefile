@@ -61,7 +61,11 @@ gen-migration: ## Generate up migration file
 gen-down-migration: ## Generate down migration file
 	$(eval include .env.test)
 	$(eval export $(sh sed 's/=.*//' .env.test))
-	yarn run prisma migrate diff --from-schema-datamodel prisma/schema.prisma --to-migrations prisma/migrations --shadow-database-url ${SHADOW_DATABASE_URL} --script down.sql
+	yarn run prisma migrate diff \
+		--from-schema-datamodel prisma/schema.prisma \
+		--to-migrations prisma/migrations \
+		--shadow-database-url ${SHADOW_DATABASE_URL} \
+		--script > down.sql
 
 .PHONY: apply-migration
 apply-migration: ## Apply migration file changes to db
