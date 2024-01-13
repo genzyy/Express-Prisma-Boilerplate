@@ -15,7 +15,6 @@ model ApiMetadata {
     created         DateTime @default(now())
     updated         DateTime @updatedAt
     authoredById    Int
-    someRandomColumn String
 }
 
 model User {
