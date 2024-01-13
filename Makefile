@@ -54,8 +54,18 @@ format: ## Format project with eslint and prettier
 	yarn run lint:fix && yarn run prettier:fix
 
 .PHONY: gen-migration
-gen-migration: ## Generate migration file
+gen-migration: ## Generate up migration file
 	yarn run prisma migrate dev --name $(m) --create-only
+
+.PHONY: gen-down-migration
+gen-down-migration: ## Generate down migration file
+	$(eval include .env.test)
+	$(eval export $(sh sed 's/=.*//' .env.test))
+	yarn run prisma migrate diff \
+		--from-schema-datamodel prisma/schema.prisma \
+		--to-migrations prisma/migrations \
+		--shadow-database-url ${SHADOW_DATABASE_URL} \
+		--script > down.sql
 
 .PHONY: apply-migration
 apply-migration: ## Apply migration file changes to db
